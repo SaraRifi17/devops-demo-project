@@ -1,10 +1,5 @@
 # Base image 
 FROM eclipse-temurin
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 61bbd3e (Fix Dockerfile base image)
 # setting artifact path
 ARG artifact=target/demo-java-app.jar
 
