@@ -59,9 +59,10 @@ pipeline {
                     if git diff --cached --quiet; then
                         echo "No changes to commit"
                     else
-                       git commit -m "Update deployment image to version ${build_version}"
-                       git push https://${GIT_USER_NAME}:${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
-                     fi
+                       git commit -m "Update deployment image to version V2.0" || echo "No changes to commit"
+                       git pull --rebase https://SaraRifi17:${GITHUB_TOKEN}@github.com/SaraRifi17/devops-demo-project.git main
+                       git push https://SaraRifi17:${GITHUB_TOKEN}@github.com/SaraRifi17/devops-demo-project.git HEAD:main
+                    fi
                  '''
             }
         }
