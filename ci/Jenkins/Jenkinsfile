@@ -49,21 +49,24 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                sh '''
-                   git config user.email "sara.rifi2003@gmail.com"
-                   git config user.name "SaraRifi17"
+                 git config user.email "sara.rifi2003@gmail.com"
+                 git config user.name "SaraRifi17"
 
-                    sed -i "s/tag: .*/tag: ${build_version}/" helm/app/values.yaml
+                 git fetch https://SaraRifi17:${GITHUB_TOKEN}@github.com/SaraRifi17/devops-demo-project.git main
 
-                    git add helm/app/values.yaml
+                 git checkout FETCH_HEAD -- helm/app/values.yaml
 
-                    if git diff --cached --quiet; then
-                        echo "No changes to commit"
-                    else
-                       git commit -m "Update deployment image to version V2.0" || echo "No changes to commit"
-                       git pull --rebase https://SaraRifi17:${GITHUB_TOKEN}@github.com/SaraRifi17/devops-demo-project.git main
-                       git push https://SaraRifi17:${GITHUB_TOKEN}@github.com/SaraRifi17/devops-demo-project.git HEAD:main
-                    fi
-                 '''
+                 sed -i "s/tag: .*/tag: ${build_version}/" helm/app/values.yaml
+
+                 git add helm/app/values.yaml
+
+                 if git diff --cached --quiet; then
+                   echo "No changes to commit"
+                 else
+                   git commit -m "Update deployment image to version ${build_version}"
+                   git push https://SaraRifi17:${GITHUB_TOKEN}@github.com/SaraRifi17/devops-demo-project.git HEAD:main
+                 fi
+             '''
             }
         }
     }
